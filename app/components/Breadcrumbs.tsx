@@ -1,17 +1,33 @@
+import Link from "next/link";
+
 export default function Breadcrumbs() {
   return (
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <a href="#">Home</a>
+    <div className="text-sm breadcrumbs">
+      <ul>
+        <li>
+          <Link href="/">Home</Link>
         </li>
-        <li className="breadcrumb-item">
-          <a href="#">Library</a>
+        <li>
+          <Link href="/my-todos">My To-Dos</Link>
         </li>
-        <li className="breadcrumb-item active" aria-current="page">
-          Data
-        </li>
-      </ol>
-    </nav>
+        <li>Add New To-Do</li>
+      </ul>
+    </div>
   );
 }
+
+/* BOOTSTRAP VERSION:
+  <nav aria-label="breadcrumb">
+    <ol className="breadcrumb">
+      <li className="breadcrumb-item">
+        <a href="#">Home</a>
+      </li>
+      <li className="breadcrumb-item">
+        <a href="#">Library</a>
+      </li>
+      <li className="breadcrumb-item active" aria-current="page">
+        Data
+      </li>
+    </ol>
+  </nav>
+*/

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Special_Elite, Truculenta } from "next/font/google";
-import "bootstrap/dist/css/bootstrap.css";
 import "./globals.css";
+import { Theme } from "react-daisyui";
 
 import Head from "next/head";
 // import Favicon from "react-favicon";
@@ -31,20 +31,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="valentine">
       <Head>
         <link rel="icon" href="./favicon.ico" sizes="any" />
       </Head>
       <body className={truculenta.className}>
-        <div>
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full flex-none md:w-64">
-              <SideNav />
-            </div>
-            <div className="p-6 md:overflow-y-auto md:p-12">
-              <Breadcrumbs />
-              {children}
-            </div>
+        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+          <div className="w-full flex-none md:w-64">
+            <SideNav />
+          </div>
+          <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+            <Breadcrumbs />
+            {children}
           </div>
         </div>
       </body>
