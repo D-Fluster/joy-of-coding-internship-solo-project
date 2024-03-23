@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Special_Elite, Truculenta } from "next/font/google";
-
 import { PiListMagnifyingGlass } from "react-icons/pi";
+
+import { Special_Elite, Truculenta } from "next/font/google";
 
 export const specialElite = Special_Elite({
   subsets: ["latin"],
@@ -24,7 +24,7 @@ export default function SideNav() {
             </span>
           </p>
           <Link href="/" className="card-title text-fuchsia-500 text-2xl">
-            <span className={specialElite.className}>Todos Tus To-Dos</span>
+            <span className={specialElite.className}>Todos Tus ToDos</span>
           </Link>
         </div>
         <Image

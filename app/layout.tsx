@@ -5,7 +5,7 @@ import { Theme } from "react-daisyui";
 
 import Head from "next/head";
 // import Favicon from "react-favicon";
-import "./favicon.ico";
+// import favicon from "./favicon.ico";
 
 import Breadcrumbs from "./components/Breadcrumbs";
 import SideNav from "./components/SideNav";
@@ -23,6 +23,9 @@ export const truculenta = Truculenta({
 export const metadata: Metadata = {
   title: "Todos Tus To-Dos",
   description: "Personal Task Manager by LAdanimo",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -33,13 +36,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="valentine">
       <Head>
-        <link rel="icon" href="./favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
       <body className={truculenta.className}>
         <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-          <div className="w-full flex-none md:w-64">
-            <SideNav />
-          </div>
+          <div className="w-full flex-none md:w-64">{/* <SideNav /> */}</div>
           <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
             <Breadcrumbs />
             {children}

@@ -10,7 +10,9 @@ export default function Breadcrumbs() {
         <li>
           <Link href="/my-todos">My To-Dos</Link>
         </li>
-        <li>Add New To-Do</li>
+        <li>
+          <Link href="/new-todo">Add New To-Do</Link>
+        </li>
       </ul>
     </div>
   );
