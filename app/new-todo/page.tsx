@@ -56,14 +56,11 @@ export default function NewTodo() {
             <strong>
               OOPS<em>!</em>
             </strong>
-            &emsp;An unexpected error occurred. Please try again. ({error})
+            &emsp;An unexpected error occurred. Please try again.
           </span>
         </Alert>
       )}
-      <Form
-        className="form-control w-full"
-        onSubmit={handleSubmit((data) => console.log(data))}
-      >
+      <Form className="form-control w-full" onSubmit={onSubmit}>
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Title:</strong>
@@ -118,7 +115,28 @@ export default function NewTodo() {
             </span>
           </Alert>
         )}
-
+        <div className="label">
+          <span className="label-text ml-3 uppercase">
+            <strong>Due:</strong>
+          </span>
+          <span className="label-text-alt mr-3 uppercase">
+            Required&nbsp;<span className=" text-red-500">*</span>
+          </span>
+        </div>
+        <label className="input input-bordered flex gap-2 select-error mb-5">
+          <input type="datetime-local" {...register("dueAt")}></input>
+        </label>
+        {errors.dueAt && (
+          <Alert status="error" role="alert" className="alert alert-error mb-5">
+            <span className={specialElite.className}>
+              ⚠️&ensp;
+              <strong>
+                OOPS<em>!</em>
+              </strong>
+              &emsp;Please give this to-do a <strong>due date</strong>.
+            </span>
+          </Alert>
+        )}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Category:</strong>
@@ -129,7 +147,7 @@ export default function NewTodo() {
         </div>
         <label className="form-control">
           <select
-            className="select select-bordered select-error mb-5"
+            className="select select-bordered select-error mb-10"
             {...register("category")}
           >
             <option
@@ -148,18 +166,6 @@ export default function NewTodo() {
             <option value="WORK">🏢&ensp;Work</option>
           </select>
         </label>
-        <div className="label">
-          <span className="label-text ml-3 uppercase">
-            <strong>Due:</strong>
-          </span>
-          <span className="label-text-alt mr-3 uppercase">
-            <em>Optional</em> (Default: 7 Days)
-          </span>
-        </div>
-        <label className="input input-bordered flex gap-2 select-error mb-10">
-          <input type="datetime-local" {...register("dueAt")}></input>
-        </label>
-
         <button
           type="submit"
           disabled={isSubmitting}

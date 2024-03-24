@@ -3,8 +3,8 @@ import { z } from "zod";
 export const createTodoSchema = z.object({
   title: z.string().min(1, "Please give this to-do a short title.").max(255),
   description: z.string().min(1, "Please give this to-do a description."),
-  category: z.enum(["NONE", "HOME", "PERSONAL", "SCHOOL", "SOCIAL", "WORK"]).optional(),
-  dueAt: z.string().transform((str) => new Date(str)).optional()
+  dueAt: z.string().nonempty("Please give this to-do a due date.").transform((str) => new Date(str)),
+  category: z.enum(["NONE", "HOME", "PERSONAL", "SCHOOL", "SOCIAL", "WORK"]).optional()
 });
 
 

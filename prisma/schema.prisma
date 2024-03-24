@@ -35,5 +35,5 @@ model Todo {
   status      Status   @default(TO_DO)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  dueAt       DateTime @default(dbgenerated("NOW() + interval '7 days'"))
+  dueAt       DateTime
 }
