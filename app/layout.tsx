@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Special_Elite, Truculenta } from "next/font/google";
 import "./globals.css";
-import { Theme } from "react-daisyui";
+// import { Theme } from "react-daisyui";
 
 import Head from "next/head";
 // import Favicon from "react-favicon";
@@ -10,12 +10,12 @@ import Head from "next/head";
 import Breadcrumbs from "./components/Breadcrumbs";
 import SideNav from "./components/SideNav";
 
-export const specialElite = Special_Elite({
+const specialElite = Special_Elite({
   subsets: ["latin"],
   weight: "400",
 });
 
-export const truculenta = Truculenta({
+const truculenta = Truculenta({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });

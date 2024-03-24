@@ -4,8 +4,8 @@ import Link from "next/link";
 
 import { Alert, Form } from "react-daisyui";
 
-import { Special_Elite, Truculenta } from "next/font/google";
-export const specialElite = Special_Elite({
+import { Special_Elite } from "next/font/google";
+const specialElite = Special_Elite({
   subsets: ["latin"],
   weight: "400",
 });
@@ -143,6 +143,7 @@ export default function NewTodo() {
             <option value="NONE">🚫&ensp;None</option>
             <option value="HOME">🏠&ensp;Home</option>
             <option value="PERSONAL">💆&ensp;Personal</option>
+            <option value="SCHOOL">📚&ensp;School</option>
             <option value="SOCIAL">👯&ensp;Social</option>
             <option value="WORK">🏢&ensp;Work</option>
           </select>

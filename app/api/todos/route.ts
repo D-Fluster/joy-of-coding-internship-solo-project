@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import { createTodoSchema } from "../../validationSchemas";
+// import { z } from "zod";
 
 // import prisma from "@prisma/client";
 // import { PrismaClient } from "@prisma/client";

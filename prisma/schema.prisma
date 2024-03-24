@@ -16,6 +16,7 @@ datasource db {
 enum Category {
   HOME
   PERSONAL
+  SCHOOL
   SOCIAL
   WORK
   NONE
