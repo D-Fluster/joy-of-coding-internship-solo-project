@@ -21,26 +21,12 @@ enum Category {
   NONE
 }
 
-enum Role {
-  ADMIN
-  USER
-}
-
 enum Status {
   TO_DO
   DONE
 }
 
-model User {
-  id       Int     @id @default(autoincrement())
-  name     String?
-  email    String  @unique
-  password String
-  role     Role    @default(USER)
-  tasks    Task[]
-}
-
-model Task {
+model Todo {
   id          Int      @id @default(autoincrement())
   title       String
   description String
@@ -49,67 +35,4 @@ model Task {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   dueAt       DateTime @default(dbgenerated("NOW() + interval '7 days'"))
-  user        User     @relation(fields: [userId], references: [id])
-  userId      Int
 }
-
-// // // // // // // // // //
-// OTHER ATTEMPTS && INFO: //
-// // // // // // // // // //
-
-// module.exports.nowPlusOneYear = () => {
-//   const now = new Date();
-//   now.setFullYear(now.getFullYear() + 1);
-//   return now.toISOString();
-// };
-
-// other       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid   // Postgres only
-
-// dueAt       DateTime @default(dbgenerated("now() + 7"))
-// Error: P3018
-// A migration failed to apply. New migrations cannot be applied before the error is recovered from. Read more about how to resolve migration issues in a production database: https://pris.ly/d/migrate-resolve
-// Migration name: 20240320224949_initial_models
-// Database error code: 42883
-// HINT: No operator matches the given name and argument types. You might need to add explicit type casts.
-// Position:
-//  19     "description" TEXT NOT NULL,
-//  20     "category" TEXT[] DEFAULT ARRAY['none']::TEXT[],
-//  21     "status" "Status" NOT NULL DEFAULT 'TO_DO',
-//  22     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-//  23     "updatedAt" TIMESTAMP(3) NOT NULL,
-//  24     "dueAt" TIMESTAMP(3) NOT NULL DEFAULT now() + 7,
-// DbError { severity: "ERROR", parsed_severity: Some(Error), code: SqlState(E42883), message: "operator does not exist: timestamp with time zone + integer", detail: None, hint: Some("No operator matches the given name and argument types. You might need to add explicit type casts."), position: Some(Original(670)), where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("parse_oper.c"), line: Some(647), routine: Some("op_error") }
-
-// // // // // // // // //
-// ATTEMPTS WITH MySQL: //
-// // // // // // // // //
-
-// datasource db {
-//   provider = "mysql"
-//   url      = env("DATABASE_URL")
-// }
-
-// enum Category {
-//   HOME
-//   PERSONAL
-//   SOCIAL
-//   WORK
-// }
-// With enums, can only choose ONE
-
-// model Task {
-//   id          Int      @id @default(autoincrement())
-//   title       String   @db.VarChar(255)
-//   description String   @db.Text
-//   category    Category
-//   status      Status   @default(TO_DO)
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-//   user        User     @relation(fields: [userId], references: [id])
-//   userId      Int
-// }
-
-// categories  String[]
-// // ERROR (with MySQL): Field "categories" in model "Task" can't be a list. The current connector does not support lists of primitive types. See:
-// // https://www.prisma.io/docs/orm/more/upgrade-guides/upgrade-from-prisma-1/schema-incompatibilities-mysql#scalar-lists-arrays-are-maintained-with-extra-table
-// // https://www.prisma.io/docs/orm/reference/prisma-schema-reference#-modifier
