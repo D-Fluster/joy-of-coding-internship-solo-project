@@ -1,10 +1,16 @@
 "use client";
 
-import Link from "next/link";
+// import Link from "next/link";
 
 import { Alert, Form } from "react-daisyui";
 
-import { Special_Elite } from "next/font/google";
+import { Sacramento, Special_Elite } from "next/font/google";
+
+const sacramento = Sacramento({
+  subsets: ["latin"],
+  weight: "400",
+});
+
 const specialElite = Special_Elite({
   subsets: ["latin"],
   weight: "400",
@@ -48,7 +54,14 @@ export default function NewTodo() {
 
   return (
     <>
-      <h1 className="text-5xl pt-5 pb-7">Add NEW To-Do</h1>
+      <h1
+        className={
+          "pt-10 pb-5 text-purple-700 text-7xl text-center " +
+          sacramento.className
+        }
+      >
+        ✨Add New To-Do💫
+      </h1>
       {error && (
         <Alert status="error" role="alert" className="alert alert-error mb-5">
           <span className={specialElite.className}>

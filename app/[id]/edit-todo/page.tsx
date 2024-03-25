@@ -1,13 +1,11 @@
-// Parent component for todo "dashboard" for logged in users
-
-"use client";
+// Accessed from "http://localhost:3000/*anything*/edit-todo"
 
 import Link from "next/link";
 
-export default function MisTodos() {
+export default async function EditTodo() {
   return (
     <div>
-      <p className="m-44">My Todos</p>
+      <p className="m-44">Edit a To-Do</p>
       <ul>
         <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
         <li>Sed finibus tortor non justo fringilla accumsan.</li>

@@ -8,12 +8,12 @@ import Head from "next/head";
 // import favicon from "./favicon.ico";
 
 import Breadcrumbs from "./components/Breadcrumbs";
-import SideNav from "./components/SideNav";
+// import SideNav from "./components/SideNav";
 
-const specialElite = Special_Elite({
-  subsets: ["latin"],
-  weight: "400",
-});
+// const specialElite = Special_Elite({
+//   subsets: ["latin"],
+//   weight: "400",
+// });
 
 const truculenta = Truculenta({
   subsets: ["latin"],
@@ -39,12 +39,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
       <body className={truculenta.className}>
-        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-          <div className="w-full flex-none md:w-64">{/* <SideNav /> */}</div>
-          <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
-            <Breadcrumbs />
-            {children}
-          </div>
+        <div className="mx-40 my-20">
+          <Breadcrumbs />
+          {children}
         </div>
       </body>
     </html>

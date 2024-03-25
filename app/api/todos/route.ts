@@ -7,6 +7,18 @@ import { createTodoSchema } from "../../validationSchemas";
 // const prisma = new PrismaClient();
 import prisma from '../../../prisma/db'
 
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: NextRequest) {
+    const allTodos = await prisma.todo.findMany();
+    // console.log(allTodos);
+
+    if (!allTodos)
+        return "Nothing to see here!"
+
+    return NextResponse.json(allTodos, { status: 201 });
+}
+
 export async function POST(request: NextRequest) {
     const submission = await request.json();
     const validation = createTodoSchema.safeParse(submission);

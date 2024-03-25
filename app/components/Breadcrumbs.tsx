@@ -8,10 +8,10 @@ export default function Breadcrumbs() {
           <Link href="/">Home</Link>
         </li>
         <li>
-          <Link href="/my-todos">My To-Dos</Link>
+          <Link href="/all-todos">All To-Dos</Link>
         </li>
         <li>
-          <Link href="/new-todo">Add New To-Do</Link>
+          <Link href="/add-todo">Add New To-Do</Link>
         </li>
       </ul>
     </div>
