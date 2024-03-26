@@ -45,7 +45,7 @@ export default function NewTodo() {
     try {
       setSubmitting(true);
       await axios.post("/api/todos", data);
-      router.push("/my-todos");
+      router.push("/todos");
     } catch (error) {
       setSubmitting(false);
       setError("OOPS! An unexpected error occurred. Please try again.");

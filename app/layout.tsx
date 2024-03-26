@@ -7,8 +7,7 @@ import Head from "next/head";
 // import Favicon from "react-favicon";
 // import favicon from "./favicon.ico";
 
-import Breadcrumbs from "./components/Breadcrumbs";
-// import SideNav from "./components/SideNav";
+import TopNav from "./components/TopNav";
 
 // const specialElite = Special_Elite({
 //   subsets: ["latin"],
@@ -39,9 +38,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
       <body className={truculenta.className}>
-        <div className="mx-40 my-20">
-          <Breadcrumbs />
-          {children}
+        <div>
+          <TopNav />
+          <div className="mx-40 my-5">{children}</div>
         </div>
       </body>
     </html>

@@ -13,10 +13,10 @@ const specialElite = Special_Elite({
   weight: "400",
 });
 
-const links = [
-  { label: "Tackle Tus To-Dos", href: "/all-todos" },
-  { label: "Add New To-Do", href: "/add-todo" },
-];
+// const links = [
+//   { label: "Tackle Tus To-Dos", href: "/todos" },
+//   { label: "Add New To-Do", href: "/add" },
+// ];
 
 /* Define the layout of this Card component */
 export default function SideNav() {
@@ -39,13 +39,13 @@ export default function SideNav() {
             <span className={sacramento.className}>Todos Tus To-Dos</span>
           </p>
 
-          <Link href="/all-todos" className="bg-fuchsia-500 rounded-full p-3">
+          <Link href="/todos" className="bg-fuchsia-500 rounded-full p-3">
             <span className={specialElite.className}>
               Tackle&ensp;<strong>ALL</strong>&ensp;To-Dos
             </span>
           </Link>
           <br />
-          <Link href="/add-todo" className="bg-fuchsia-500 rounded-full p-3">
+          <Link href="/add" className="bg-fuchsia-500 rounded-full p-3">
             <span className={specialElite.className}>
               Add&ensp;<strong>NEW</strong>&ensp;To-Do
             </span>

@@ -1,19 +1,29 @@
-// DKF CONSIDER USING SWAP FOR "DONE"?
-// See: https://daisyui.com/components/swap/
-
-// import axios from "axios";
-
 import Link from "next/link";
-import prisma from "../../prisma/db";
-import { Sacramento } from "next/font/google";
+import prisma from "../../../prisma/db";
+import { Sacramento, Special_Elite, Truculenta } from "next/font/google";
 
 const sacramento = Sacramento({
   subsets: ["latin"],
   weight: "400",
 });
 
-export default async function TodosTodos() {
-  const allTodos = await prisma.todo.findMany();
+const specialElite = Special_Elite({
+  subsets: ["latin"],
+  weight: "400",
+});
+
+export default async function SortedTodos({
+  params,
+}: {
+  params: { category: string };
+}) {
+  // const category = params.category;
+
+  const sortedTodos = await prisma.todo.findMany({
+    where: {
+      category: params.category,
+    },
+  });
 
   const headerClasses =
     " p-5 rounded-full text-purple-700 bg-fuchsia-500 font-black text-lg tracking-widest uppercase ";
@@ -22,14 +32,14 @@ export default async function TodosTodos() {
 
   return (
     <>
-      <div>
+      <div className="items-center place-items-center">
         <h1
           className={
             "pt-10 pb-7 text-purple-700 text-7xl text-center " +
             sacramento.className
           }
         >
-          ✨All To-Dos💫
+          ✨{params.category.toLowerCase()} To-Dos💫
         </h1>
         <table className="border-purple-500">
           <thead>
@@ -43,19 +53,19 @@ export default async function TodosTodos() {
             </tr>
           </thead>
           <tbody className="border-x-[5px] border-t-0 border-b-[5px] border-solid border-purple-500 p-5">
-            {allTodos.reverse().map((todo) => (
+            {sortedTodos.reverse().map((todo) => (
               <tr
                 key={todo.id}
                 className="border-4 border-t-0 border-double border-purple-500 p-5 m-5"
               >
                 <td className={bodyClasses}>{todo.status.toLowerCase()}</td>
                 <td className={bodyClasses}>
-                  <Link href={`/${todo.category}/sorted-todos`}>
+                  <Link href={`/category/${todo.category}`}>
                     {todo.category.toLowerCase()}
                   </Link>
                 </td>
                 <td className={"font-bold " + bodyClasses}>
-                  <Link href={`/${todo.id}/view-todo`}>{todo.title}</Link>
+                  <Link href={`/${todo.id}`}>{todo.title}</Link>
                 </td>
                 <td className={bodyClasses}>{todo.description}</td>
                 <td className={bodyClasses}>
@@ -64,11 +74,11 @@ export default async function TodosTodos() {
                   {todo.dueAt.toLocaleTimeString()}
                 </td>
                 <td className={bodyClasses}>
-                  <Link href={`/${todo.id}/edit-todo`} className="mr-5">
+                  <Link href={`/${todo.id}/edit`} className="mr-5">
                     ✏️
                   </Link>
                   &nbsp;
-                  <Link href={`/delete-todo/${todo.id}`} className="mr-5">
+                  <Link href={`/`} className="mr-5">
                     🗑️
                   </Link>
                   &nbsp;
@@ -78,15 +88,25 @@ export default async function TodosTodos() {
             ))}
           </tbody>
         </table>
-        {/* <p>
-          {allTodos.map((item) => (
-            <p key={item.id}>{item.title}</p>
-          ))}
-        </p>
-        <Link href="/" className="text-5xl">
-          Home
-        </Link> */}
+        {/* <div className="p-20 items-center place-items-center snap-center place-content-center self-center origin-center object-center justify-center content-center bg-center justify-self-center">
+          <Link
+            href="/todos"
+            className="btn btn-secondary self-center pl-7 pr-7 uppercase"
+          >
+            <span className={specialElite.className}>Back to All To-Dos</span>
+          </Link>
+        </div> */}
       </div>
     </>
   );
 }
+
+/* FROM NEXT.JS DASHBOARD APP:
+export default async function Page({ params }: { params: { id: string } }) {
+  const id = params.id;
+
+  const [invoice, customers] = await Promise.all([
+    fetchInvoiceById(id),
+    fetchCustomers(),
+  ]);
+*/
