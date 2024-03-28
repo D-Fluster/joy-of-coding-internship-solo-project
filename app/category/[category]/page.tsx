@@ -1,29 +1,39 @@
-import Link from "next/link";
-import prisma from "../../../prisma/db";
-import { Sacramento, Special_Elite, Truculenta } from "next/font/google";
+// Pages to View All To-Dos in a Category
+// APP > CATEGORY > [CATEGORY] > PAGE
 
+export const dynamic = "force-dynamic";
+
+import Link from "next/link";
+
+// Import Prisma for database query:
+import prisma from "../../../prisma/db";
+
+// Import to resolve TypeScript error in Prisma call (because "params.category" is of type "string", while the database's "Category" is of type "enum | undefined"):
+import { Category } from "@prisma/client";
+
+// Import cusom Google Font for titles:
+import { Sacramento } from "next/font/google";
+
+// Title font:
 const sacramento = Sacramento({
   subsets: ["latin"],
   weight: "400",
 });
 
-const specialElite = Special_Elite({
-  subsets: ["latin"],
-  weight: "400",
-});
+import { stylizeCategories } from "@/app/functions/functions";
 
 export default async function SortedTodos({
   params,
 }: {
   params: { category: string };
 }) {
-  // const category = params.category;
-
   const sortedTodos = await prisma.todo.findMany({
     where: {
-      category: params.category,
+      category: params.category as Category,
     },
   });
+
+  const stylizedCategory = stylizeCategories(params.category);
 
   const headerClasses =
     " p-5 rounded-full text-purple-700 bg-fuchsia-500 font-black text-lg tracking-widest uppercase ";
@@ -39,13 +49,12 @@ export default async function SortedTodos({
             sacramento.className
           }
         >
-          ✨{params.category.toLowerCase()} To-Dos💫
+          {stylizedCategory} To-Dos💫
         </h1>
         <table className="border-purple-500">
           <thead>
             <tr>
               <th className={headerClasses + "max-w-xs w-1/12"}>Status</th>
-              <th className={headerClasses + "max-w-xs w-1/12"}>Category</th>
               <th className={headerClasses + "max-w-lg w-1/6"}>Title</th>
               <th className={headerClasses + "max-w-xl w-1/3"}>Description</th>
               <th className={headerClasses + "max-w-sm w-1/6"}>Due</th>
@@ -59,11 +68,6 @@ export default async function SortedTodos({
                 className="border-4 border-t-0 border-double border-purple-500 p-5 m-5"
               >
                 <td className={bodyClasses}>{todo.status.toLowerCase()}</td>
-                <td className={bodyClasses}>
-                  <Link href={`/category/${todo.category}`}>
-                    {todo.category.toLowerCase()}
-                  </Link>
-                </td>
                 <td className={"font-bold " + bodyClasses}>
                   <Link href={`/${todo.id}`}>{todo.title}</Link>
                 </td>

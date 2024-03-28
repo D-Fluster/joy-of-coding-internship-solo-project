@@ -1,0 +1,285 @@
+// Client Component to Edit an Existing To-Do
+// APP > COMPONENTS > EditForm
+
+// Make this form a client component because it will take user input:
+"use client";
+
+export const dynamic = "force-dynamic";
+
+// import Link from "next/link";
+
+// Import Prisma for database query:
+import prisma from "../../prisma/db";
+
+// Import all tools necessary for routing and validation:
+import axios from "axios";
+import { editTodoSchema } from "@/app/validationSchemas";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+// Import custom fonts and DaisyUI components:
+import { Alert, Form } from "react-daisyui";
+import { Sacramento, Special_Elite } from "next/font/google";
+import { Todo } from "@prisma/client";
+
+const sacramento = Sacramento({
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const specialElite = Special_Elite({
+  subsets: ["latin"],
+  weight: "400",
+});
+
+type EditTodoForm = z.infer<typeof editTodoSchema>;
+
+interface Props {
+  thisTodo: Todo[];
+}
+
+export default function EditForm({ thisTodo }: Props) {
+  console.log("BEFORE SPACING");
+  console.log(thisTodo);
+  console.log("AFTER SPACING");
+  let {
+    id,
+    title,
+    description,
+    category,
+    status,
+    createdAt,
+    updatedAt,
+    dueAt,
+  } = thisTodo;
+
+  dueAt = dueAt.toISOString().split("Z");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EditTodoForm>({
+    resolver: zodResolver(editTodoSchema),
+  });
+
+  const router = useRouter();
+
+  const [error, setError] = useState("");
+
+  const [isSubmitting, setSubmitting] = useState(false);
+
+  const onSubmit = handleSubmit(async (newData) => {
+    try {
+      setSubmitting(true);
+      await axios.put("/api/todos", newData);
+      router.push(`/${id}`);
+    } catch (error) {
+      console.error(error);
+      setSubmitting(false);
+      setError("OOPS! An unexpected error occurred. Please try again.");
+    }
+  });
+
+  return (
+    <>
+      <h1
+        className={
+          "pt-10 pb-5 text-purple-700 text-7xl text-center " +
+          sacramento.className
+        }
+      >
+        ✨Edit To-Do #{id}💫
+      </h1>
+      {error && (
+        <Alert status="error" role="alert" className="alert alert-error mb-5">
+          <span className={specialElite.className}>
+            ⚠️&ensp;
+            <strong>
+              OOPS<em>!</em>
+            </strong>
+            &emsp;An unexpected error occurred. Please try again.
+          </span>
+        </Alert>
+      )}
+      <Form className="form-control w-full" onSubmit={onSubmit}>
+        <div className="label">
+          <span className="label-text ml-3 uppercase">
+            <strong>ID (Auto-Generated):</strong>
+          </span>
+          <span className="label-text-alt mr-3 uppercase">
+            Required&nbsp;<span className=" text-red-500">*</span>
+          </span>
+        </div>
+        <label className="input input-bordered flex items-center gap-2 select-error mb-5">
+          <input
+            disabled
+            type="text"
+            className="grow"
+            defaultValue={id}
+            placeholder={id}
+            {...register("id")}
+          />
+        </label>
+        <div className="label">
+          <span className="label-text ml-3 uppercase">
+            <strong>Title:</strong>
+          </span>
+          <span className="label-text-alt mr-3 uppercase">
+            Required&nbsp;<span className=" text-red-500">*</span>
+          </span>
+        </div>
+        <label className="input input-bordered flex items-center gap-2 select-error mb-5">
+          <input
+            type="text"
+            className="grow"
+            defaultValue={title}
+            placeholder="Give your to-do a short title"
+            {...register("title")}
+          />
+        </label>
+        {errors.title && (
+          <Alert status="error" role="alert" className="alert alert-error mb-5">
+            <span className={specialElite.className}>
+              ⚠️&ensp;
+              <strong>
+                OOPS<em>!</em>
+              </strong>
+              &emsp;Please give this to-do a <strong>short title</strong>.
+            </span>
+          </Alert>
+        )}
+        <div className="label">
+          <span className="label-text ml-3 uppercase">
+            <strong>Description:</strong>
+          </span>
+          <span className="label-text-alt mr-3 uppercase">
+            Required&nbsp;<span className=" text-red-500">*</span>
+          </span>
+        </div>
+        <label className="input input-bordered flex items-center gap-2 select-error mb-5">
+          <input
+            type="text"
+            className="grow"
+            defaultValue={description}
+            placeholder="Give your to-do a full description"
+            {...register("description")}
+          />
+        </label>
+        {errors.description && (
+          <Alert status="error" role="alert" className="alert alert-error mb-5">
+            <span className={specialElite.className}>
+              ⚠️&ensp;
+              <strong>
+                OOPS<em>!</em>
+              </strong>
+              &emsp;Please give this to-do a <strong>description</strong>.
+            </span>
+          </Alert>
+        )}
+        <div className="label">
+          <span className="label-text ml-3 uppercase">
+            <strong>Due:</strong>
+          </span>
+          <span className="label-text-alt mr-3 uppercase">
+            Required&nbsp;<span className=" text-red-500">*</span>
+          </span>
+        </div>
+        <label className="input input-bordered flex gap-2 select-error mb-5">
+          <input
+            type="datetime-local"
+            defaultValue={dueAt}
+            // defaultValue={Date.parse(dueAt.toLocaleString())}
+            {...register("dueAt")}
+          ></input>
+        </label>
+        {errors.dueAt && (
+          <Alert status="error" role="alert" className="alert alert-error mb-5">
+            <span className={specialElite.className}>
+              ⚠️&ensp;
+              <strong>
+                OOPS<em>!</em>
+              </strong>
+              &emsp;Please give this to-do a <strong>due date</strong>.
+            </span>
+          </Alert>
+        )}
+        <div className="label">
+          <span className="label-text ml-3 uppercase">
+            <strong>Category:</strong>
+          </span>
+          <span className="label-text-alt mr-3 uppercase">
+            <em>Optional</em> (Default: None)
+          </span>
+        </div>
+        <label className="form-control">
+          <select
+            className="select select-bordered select-error mb-5"
+            defaultValue={category}
+            {...register("category")}
+          >
+            <option className="uppercase" disabled>
+              Choose a Category
+            </option>
+            <option value="NONE">🚫&ensp;None</option>
+            <option value="HOME">🏠&ensp;Home</option>
+            <option value="PERSONAL">💆&ensp;Personal</option>
+            <option value="SCHOOL">📚&ensp;School</option>
+            <option value="SOCIAL">👯&ensp;Social</option>
+            <option value="WORK">🏢&ensp;Work</option>
+          </select>
+        </label>
+        <div className="label">
+          <span className="label-text ml-3 uppercase">
+            <strong>Status:</strong>
+          </span>
+          <span className="label-text-alt mr-3 uppercase">
+            <em>Optional</em> (Default: To-Do)
+          </span>
+        </div>
+        <label className="form-control">
+          <select
+            className="select select-bordered select-error mb-10"
+            defaultValue={status}
+            {...register("status")}
+          >
+            <option className="uppercase" disabled>
+              Choose a Status
+            </option>
+            <option value="TO_DO">🛠️&ensp;To-Do</option>
+            <option value="DONE">✅&ensp;Done!</option>
+          </select>
+        </label>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="btn btn-secondary  self-center pl-11 pr-11 uppercase"
+        >
+          <span className={specialElite.className}>Edit To-Do</span>
+        </button>
+      </Form>
+    </>
+  );
+}
+
+/*
+interface Props {
+  thisTodo: Todo[];
+}
+
+export default function EditForm({ thisTodo }: Props) {
+  console.log(thisTodo);
+  //   const {
+  //     id,
+  //     title,
+  //     description,
+  //     category,
+  //     status,
+  //     createdAt,
+  //     updatedAt,
+  //     dueAt,
+  //   } = thisTodo;
+*/

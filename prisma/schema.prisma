@@ -27,6 +27,7 @@ enum Status {
   DONE
 }
 
+// PRO TIP: Instead of using an Enum (AKA "enumerated type," "categorical variable," or "factor") for Status, this could also have been done using a Boolean (e.g., "isDone Boolean @default(false)")
 model Todo {
   id          Int      @id @default(autoincrement())
   title       String

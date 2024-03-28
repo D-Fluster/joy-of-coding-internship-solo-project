@@ -1,13 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Special_Elite } from "next/font/google";
+// import { usePathname } from "next/navigation";
 
 const specialElite = Special_Elite({
   subsets: ["latin"],
   weight: "400",
 });
 
+// Define an array of objects to hold link information for mapping
+const links = [
+  { emoji: "🏠", label: "Home", href: "/category/HOME" },
+  { emoji: "💆", label: "Personal", href: "/category/PERSONAL" },
+  { emoji: "📚", label: "School", href: "/category/SCHOOL" },
+  { emoji: "👯", label: "Social", href: "/category/SOCIAL" },
+  { emoji: "🏢", label: "Work", href: "/category/WORK" },
+  { emoji: "🚫", label: "Uncategorized", href: "/category/NONE" },
+];
+
 export default function TopNav() {
+  // const currentPath = usePathname();
+
   return (
     <>
       <div className="navbar bg-secondary min-h-20 text-base-100">
@@ -33,34 +46,21 @@ export default function TopNav() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-fuchsia-500 text-slate-600 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-fuchsia-200 text-slate-600 rounded-box w-52"
             >
               <li>
-                <a>Item 1</a>
+                <Link href="/todos">View All To-Dos</Link>
               </li>
               <li>
-                <a>Parent</a>
+                <a>View by Category</a>
                 <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a>Item 3</a>
-              </li>
-              <li>
-                <a>Tackle Tus To-Dos</a>
-                <ul className="p-2">
-                  <li>
-                    <Link href="/todos">View All To-Dos</Link>
-                  </li>
-                  <li>
-                    <Link href="/">Category: X</Link>
-                  </li>
+                  {links.map((link) => (
+                    <li key={link.label}>
+                      <Link href={link.href}>
+                        {link.emoji}&emsp;{link.label}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </li>
             </ul>
@@ -82,26 +82,15 @@ export default function TopNav() {
             </li>
             <li>
               <details>
-                <summary>To-Dos by Category</summary>
+                <summary>By Category</summary>
                 <ul className="p-2 bg-fuchsia-200 text-slate-600">
-                  <li>
-                    <Link href="/category/HOME">🏠&ensp;Home</Link>
-                  </li>
-                  <li>
-                    <Link href="/category/PERSONAL">💆&ensp;Personal</Link>
-                  </li>
-                  <li>
-                    <Link href="/category/SCHOOL">📚&ensp;School</Link>
-                  </li>
-                  <li>
-                    <Link href="/category/SOCIAL">👯&ensp;Social</Link>
-                  </li>
-                  <li>
-                    <Link href="/category/WORK">🏢&ensp;Work</Link>
-                  </li>
-                  <li>
-                    <Link href="/category/NONE">🚫&ensp;Other</Link>
-                  </li>
+                  {links.map((link) => (
+                    <li key={link.label}>
+                      <Link href={link.href}>
+                        {link.emoji}&nbsp;&nbsp;&nbsp;{link.label}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </details>
             </li>

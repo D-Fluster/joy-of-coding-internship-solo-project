@@ -1,10 +1,13 @@
+// Page to View an Existing To-Do
+// APP > [ID] > PAGE
+
 import Link from "next/link";
 
 // Import Prisma for database query:
 import prisma from "../../prisma/db";
 
 // Import cusom Google Fonts for titles and buttons:
-import { Sacramento, Special_Elite, Truculenta } from "next/font/google";
+import { Sacramento, Special_Elite } from "next/font/google";
 
 // Title font:
 const sacramento = Sacramento({
@@ -54,6 +57,9 @@ export default async function ViewTodo({ params }: { params: { id: number } }) {
       id: Number(params.id),
     },
   });
+
+  // const { id, slug} = thisTodo
+  // or thisTodo.id
 
   // If there is no to-do in the database with the given ID, redirect to a custom 404 page:
   if (!thisTodo)

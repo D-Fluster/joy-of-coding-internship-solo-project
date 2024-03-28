@@ -1,15 +1,13 @@
-// Page to View All To-Dos
-// APP > TODOS > PAGE
+// Client Component to View All To-Dos
+// APP > COMPONENTS > ViewAll
 
 // DKF CONSIDER USING SWAP FOR "DONE"? -- OR MAYBE A TOGGLE!
 // See: https://daisyui.com/components/swap/
 // And: https://daisyui.com/components/toggle/
 
+"use client";
+
 export const dynamic = "force-dynamic";
-
-import ViewAll from "../components/ViewAll";
-
-import axios from "axios";
 
 import Link from "next/link";
 import prisma from "../../prisma/db";
@@ -20,19 +18,6 @@ const sacramento = Sacramento({
   subsets: ["latin"],
   weight: "400",
 });
-
-/*
-const onSubmit = handleSubmit(async (data) => {
-    try {
-      setSubmitting(true);
-      await axios.post("/api/todos", data);
-      router.push("/todos");
-    } catch (error) {
-      setSubmitting(false);
-      setError("OOPS! An unexpected error occurred. Please try again.");
-    }
-  });
-*/
 
 export const getAllTodos = async () => {
   try {
