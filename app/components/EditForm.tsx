@@ -38,14 +38,14 @@ const specialElite = Special_Elite({
 type EditTodoForm = z.infer<typeof editTodoSchema>;
 
 interface Props {
-  thisTodo: Todo[];
+  thisTodo: Todo;
 }
 
 export default function EditForm({ thisTodo }: Props) {
-  console.log("BEFORE SPACING");
-  console.log(thisTodo);
-  console.log("AFTER SPACING");
-  let {
+  //   console.log("BEFORE SPACING");
+  //   console.log(thisTodo);
+  //   console.log("AFTER SPACING");
+  const {
     id,
     title,
     description,
@@ -56,7 +56,11 @@ export default function EditForm({ thisTodo }: Props) {
     dueAt,
   } = thisTodo;
 
-  dueAt = dueAt.toISOString().split("Z");
+  const dueAtTransformed = dueAt.toISOString().split("Z")[0];
+  //   id = Number(id);
+
+  // Create a "transform" to process this separately
+  // Can create another prop based on dueAt -- e.g., dueAtTransformed -- and leave dueAt alone, but pass in DAT to value
 
   const {
     register,
@@ -73,9 +77,11 @@ export default function EditForm({ thisTodo }: Props) {
   const [isSubmitting, setSubmitting] = useState(false);
 
   const onSubmit = handleSubmit(async (newData) => {
+    console.log(newData);
     try {
+      console.log(newData);
       setSubmitting(true);
-      await axios.put("/api/todos", newData);
+      await axios.put(`/api/todos/${thisTodo.id}`, newData);
       router.push(`/${id}`);
     } catch (error) {
       console.error(error);
@@ -106,7 +112,7 @@ export default function EditForm({ thisTodo }: Props) {
         </Alert>
       )}
       <Form className="form-control w-full" onSubmit={onSubmit}>
-        <div className="label">
+        {/* <div className="hidden label">
           <span className="label-text ml-3 uppercase">
             <strong>ID (Auto-Generated):</strong>
           </span>
@@ -114,16 +120,16 @@ export default function EditForm({ thisTodo }: Props) {
             Required&nbsp;<span className=" text-red-500">*</span>
           </span>
         </div>
-        <label className="input input-bordered flex items-center gap-2 select-error mb-5">
+        <label className="hidden input input-bordered items-center gap-2 select-error mb-5">
           <input
             disabled
             type="text"
             className="grow"
             defaultValue={id}
-            placeholder={id}
+            // placeholder={id}
             {...register("id")}
           />
-        </label>
+        </label> */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Title:</strong>
@@ -191,7 +197,7 @@ export default function EditForm({ thisTodo }: Props) {
         <label className="input input-bordered flex gap-2 select-error mb-5">
           <input
             type="datetime-local"
-            defaultValue={dueAt}
+            defaultValue={dueAtTransformed}
             // defaultValue={Date.parse(dueAt.toLocaleString())}
             {...register("dueAt")}
           ></input>
@@ -255,6 +261,7 @@ export default function EditForm({ thisTodo }: Props) {
         </label>
         <button
           type="submit"
+          onSubmit={onSubmit}
           disabled={isSubmitting}
           className="btn btn-secondary  self-center pl-11 pr-11 uppercase"
         >

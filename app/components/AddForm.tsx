@@ -46,6 +46,7 @@ export default function AddForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      console.log(data);
       setSubmitting(true);
       await axios.post("/api/todos", data);
       router.push("/todos");
@@ -140,7 +141,10 @@ export default function AddForm() {
           </span>
         </div>
         <label className="input input-bordered flex gap-2 select-error mb-5">
-          <input type="datetime-local" {...register("dueAt")}></input>
+          <input 
+            type="datetime-local" 
+            {...register("dueAt")}>
+          </input>
         </label>
         {errors.dueAt && (
           <Alert status="error" role="alert" className="alert alert-error mb-5">
