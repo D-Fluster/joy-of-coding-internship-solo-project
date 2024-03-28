@@ -44,18 +44,33 @@ export async function PUT(request: NextRequest, { params } : { params: {id: stri
 }
 
 // HTTP DELETE function for deleting an existing to-do:
-export async function DELETE(request: NextRequest) {
-    const submission = await request.json();
-    const validation = deleteTodoSchema.safeParse(submission);
-    
-    if (!validation.success)
-        return NextResponse.json(validation.error.format(), { status: 400 })
+export async function DELETE({ params } : { params: {id: number | string}}) {
+    if (!params.id)
+        return { status: 400 }
     
     const deleteTodo = await prisma.todo.delete({
         where: {
-            id: validation.data.id
+            id: Number(params.id)
         },
     });
 
     return NextResponse.json(deleteTodo, { status: 200 });
 }
+
+
+// // HTTP DELETE function for deleting an existing to-do:
+// export async function DELETE(request: NextRequest) {
+//     const submission = await request.json();
+//     const validation = deleteTodoSchema.safeParse(submission);
+    
+//     if (!validation.success)
+//         return NextResponse.json(validation.error.format(), { status: 400 })
+    
+//     const deleteTodo = await prisma.todo.delete({
+//         where: {
+//             id: validation.data.id
+//         },
+//     });
+
+//     return NextResponse.json(deleteTodo, { status: 200 });
+// }

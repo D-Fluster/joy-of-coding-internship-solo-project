@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Special_Elite } from "next/font/google";
 // import { usePathname } from "next/navigation";
@@ -27,7 +26,6 @@ export default function TopNav() {
         <div className="navbar-start">
           <div className="dropdown">
             {/* Hamburger nav for smaller screens */}
-            {/* DKF finish once everything is finalized! */}
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

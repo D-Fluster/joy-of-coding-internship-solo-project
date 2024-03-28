@@ -1,15 +1,10 @@
-// Client Component to Edit an Existing To-Do
-// APP > COMPONENTS > EditForm
+// Client Component to Edit an Existing To-Do:
+// // APP > COMPONENTS > EditForm
 
 // Make this form a client component because it will take user input:
 "use client";
 
 export const dynamic = "force-dynamic";
-
-// import Link from "next/link";
-
-// Import Prisma for database query:
-import prisma from "../../prisma/db";
 
 // Import all tools necessary for routing and validation:
 import axios from "axios";
@@ -42,9 +37,6 @@ interface Props {
 }
 
 export default function EditForm({ thisTodo }: Props) {
-  //   console.log("BEFORE SPACING");
-  //   console.log(thisTodo);
-  //   console.log("AFTER SPACING");
   const {
     id,
     title,
@@ -112,24 +104,6 @@ export default function EditForm({ thisTodo }: Props) {
         </Alert>
       )}
       <Form className="form-control w-full" onSubmit={onSubmit}>
-        {/* <div className="hidden label">
-          <span className="label-text ml-3 uppercase">
-            <strong>ID (Auto-Generated):</strong>
-          </span>
-          <span className="label-text-alt mr-3 uppercase">
-            Required&nbsp;<span className=" text-red-500">*</span>
-          </span>
-        </div>
-        <label className="hidden input input-bordered items-center gap-2 select-error mb-5">
-          <input
-            disabled
-            type="text"
-            className="grow"
-            defaultValue={id}
-            // placeholder={id}
-            {...register("id")}
-          />
-        </label> */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Title:</strong>
@@ -289,4 +263,23 @@ export default function EditForm({ thisTodo }: Props) {
   //     updatedAt,
   //     dueAt,
   //   } = thisTodo;
+
+          <div className="hidden label">
+          <span className="label-text ml-3 uppercase">
+            <strong>ID (Auto-Generated):</strong>
+          </span>
+          <span className="label-text-alt mr-3 uppercase">
+            Required&nbsp;<span className=" text-red-500">*</span>
+          </span>
+        </div>
+        <label className="hidden input input-bordered items-center gap-2 select-error mb-5">
+          <input
+            disabled
+            type="text"
+            className="grow"
+            defaultValue={id}
+            // placeholder={id}
+            {...register("id")}
+          />
+        </label>
 */
