@@ -15,15 +15,7 @@ import { Todo } from "@prisma/client";
 
 import Custom404 from "./Custom404";
 import { stylizeCategories, stylizeStatuses } from "../definitions/functions";
-
-// import DELETE from "../../app/definitions/functions"
-
-import { DELETE } from "../api/todos/[id]/route";
-
-///// Import all tools necessary for routing and validation:
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import PageTitle from "@/app/components/PageTitle";
 
 // Title font:
 const sacramento = Sacramento({
@@ -56,80 +48,29 @@ export default function ViewOne({ thisTodo }: Props) {
   const actionClasses =
     " p-5 rounded-full bg-purple-700 text-fuchsia-500 font-black text-center text-lg tracking-widest uppercase underline underline-offset-4 decoration-fuchsia-300";
 
-  // const separatorClasses = " min-h-10 ";
-
-  // const router = useRouter();
-
-  // const [error, setError] = useState("");
-
-  // const deleteOnClick = DELETE(async ({params}: {thisTodo.id}) => {
-  //   console.log(thisTodo.id);
-  //   try {
-  //     await axios.delete(`/api/todos/${thisTodo.id}`);
-  //     router.push("/todos");
-  //   } catch (error) {
-  //     console.error(error);
-  //     setError("OOPS! An unexpected error occurred. Please try again.");
-  //   }
-  // });
-
-  // const router = useRouter();
-
-  // const [error, setError] = useState("");
-
-  // const deleteOnClick = DELETE((thisTodo.id) => {
-  //   console.log(thisTodo.id);
-  //   try {
-  //     await axios.delete(`/api/todos/${thisTodo.id}`);
-  //     router.push("/todos");
-  //   } catch (error) {
-  //     console.error(error);
-  //     setError("OOPS! An unexpected error occurred. Please try again.");
-  //   }
-  // });
-
-  /*
-onClick={(thisTodo.id) => (DELETE(thisTodo.id))
-
-const onSubmit = handleSubmit(async (newData) => {
-    console.log(newData);
-    try {
-      console.log(newData);
-      setSubmitting(true);
-      await axios.put(`/api/todos/${thisTodo.id}`, newData);
-      router.push(`/${id}`);
-    } catch (error) {
-      console.error(error);
-      setSubmitting(false);
-      setError("OOPS! An unexpected error occurred. Please try again.");
-    }
-  });
-  */
-
   // Display details of the requested to-do based on the ID provided in the URL slug:
   return (
     <div>
-      <h1
-        className={
-          "pt-14 pb-12 text-purple-700 text-7xl text-center " +
-          sacramento.className
-        }
-      >
-        ✨To-Do #{thisTodo.id}💫
-      </h1>
+      <PageTitle>✨To-Do #{thisTodo.id}💫</PageTitle>
       <table>
         <tbody>
           <tr>
             <th className={headerClasses}>Status</th>
             <td>&emsp;</td>
-            <td className={bodyClasses}>{stylizeStatuses(thisTodo.status)}</td>
+            <td className={bodyClasses}>
+              <Link href={`/status/${thisTodo.status}`}>
+                {stylizeStatuses(thisTodo.status)}
+              </Link>
+            </td>
           </tr>
           <tr>&emsp;</tr>
           <tr>
             <th className={headerClasses}>Category</th>
             <td></td>
             <td className={bodyClasses}>
-              {stylizeCategories(thisTodo.category)}
+              <Link href={`/category/${thisTodo.category}`}>
+                {stylizeCategories(thisTodo.category)}
+              </Link>
             </td>
           </tr>
           <tr>&emsp;</tr>
@@ -180,7 +121,9 @@ const onSubmit = handleSubmit(async (newData) => {
           </tr>
           <tr>&emsp;</tr>
           <tr>
-            <th className={actionClasses}>Edit</th>
+            <th className={actionClasses}>
+              <Link href={`/${thisTodo.id}/edit`}>Edit</Link>
+            </th>
             <td>&emsp;</td>
             <td className={bodyClasses}>
               <Link href={`/${thisTodo.id}/edit`}>
@@ -190,13 +133,14 @@ const onSubmit = handleSubmit(async (newData) => {
           </tr>
           <tr>&emsp;</tr>
           <tr>
-            <th className={actionClasses}>Delete</th>
+            <th className={actionClasses}>
+              <Link href={`/${thisTodo.id}/delete`}>Delete</Link>
+            </th>
             <td>&emsp;</td>
-            <td
-              className={bodyClasses}
-              // onClick={() => deleteOnClick(thisTodo.id)}
-            >
-              🗑️
+            <td className={bodyClasses}>
+              <Link href={`/${thisTodo.id}/delete`}>
+                <td>🗑️</td>
+              </Link>
             </td>
           </tr>
         </tbody>

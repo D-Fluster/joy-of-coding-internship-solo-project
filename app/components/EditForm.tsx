@@ -6,6 +6,8 @@
 
 export const dynamic = "force-dynamic";
 
+import PageTitle from "@/app/components/PageTitle";
+
 // Import all tools necessary for routing and validation:
 import axios from "axios";
 import { editTodoSchema } from "@/app/validationSchemas";
@@ -14,6 +16,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+
+// import { addLeadingZero } from "../definitions/functions";
 
 // Import custom fonts and DaisyUI components:
 import { Alert, Form } from "react-daisyui";
@@ -43,13 +47,38 @@ export default function EditForm({ thisTodo }: Props) {
     description,
     category,
     status,
-    createdAt,
-    updatedAt,
+    // createdAt,
+    // updatedAt,
     dueAt,
   } = thisTodo;
 
-  const dueAtTransformed = dueAt.toISOString().split("Z")[0];
-  //   id = Number(id);
+  // Destructure dueAt object for restructuring into "[YYYY]-[MM]-[DD]T[HH]:[mm]" format in local time
+  // Otherwise, just using "dueAt.toISOString().split("Z")[0];", the "Due" field will auto-populate with the date-time in UTC
+  const dueAtYear = dueAt.getFullYear();
+  const dueAtMonth = dueAt.getMonth() + 1;
+  const dueAtDay = dueAt.getDate();
+  const dueAtHours = dueAt.getHours();
+  const dueAtMinutes = dueAt.getMinutes();
+
+  // For months, days, hours, and minutes between 0 and 9, utilize a custom function to add a leading zero for formatting purposes:
+  const addLeadingZero = (datePiece: number) => {
+    if (datePiece.toString().length == 1) {
+      const datePieceString = `0${datePiece}`;
+      console.log(datePieceString);
+      return datePieceString;
+    } else {
+      return datePiece;
+    }
+  };
+
+  // Reformat the dueAt object in local time:
+  const dueAtTransformed = `${dueAtYear}-${addLeadingZero(
+    dueAtMonth
+  )}-${addLeadingZero(dueAtDay)}T${addLeadingZero(dueAtHours)}:${addLeadingZero(
+    dueAtMinutes
+  )}`;
+
+  console.log(dueAtTransformed);
 
   // Create a "transform" to process this separately
   // Can create another prop based on dueAt -- e.g., dueAtTransformed -- and leave dueAt alone, but pass in DAT to value
@@ -84,14 +113,7 @@ export default function EditForm({ thisTodo }: Props) {
 
   return (
     <>
-      <h1
-        className={
-          "pt-10 pb-5 text-purple-700 text-7xl text-center " +
-          sacramento.className
-        }
-      >
-        ✨Edit To-Do #{id}💫
-      </h1>
+      <PageTitle>✨Edit To-Do #{id}💫</PageTitle>
       {error && (
         <Alert status="error" role="alert" className="alert alert-error mb-5">
           <span className={specialElite.className}>
@@ -172,7 +194,6 @@ export default function EditForm({ thisTodo }: Props) {
           <input
             type="datetime-local"
             defaultValue={dueAtTransformed}
-            // defaultValue={Date.parse(dueAt.toLocaleString())}
             {...register("dueAt")}
           ></input>
         </label>

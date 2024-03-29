@@ -4,6 +4,8 @@
 // Make this form a client component because it will take user input:
 "use client";
 
+import PageTitle from "@/app/components/PageTitle";
+
 // Import all tools necessary for routing and validation:
 import axios from "axios";
 import { createTodoSchema } from "@/app/validationSchemas";
@@ -58,14 +60,7 @@ export default function AddForm() {
 
   return (
     <>
-      <h1
-        className={
-          "pt-10 pb-5 text-purple-700 text-7xl text-center " +
-          sacramento.className
-        }
-      >
-        ✨Add New To-Do💫
-      </h1>
+      <PageTitle>✨Add New To-Do💫</PageTitle>
       {error && (
         <Alert status="error" role="alert" className="alert alert-error mb-5">
           <span className={specialElite.className}>
@@ -141,10 +136,7 @@ export default function AddForm() {
           </span>
         </div>
         <label className="input input-bordered flex gap-2 select-error mb-5">
-          <input 
-            type="datetime-local" 
-            {...register("dueAt")}>
-          </input>
+          <input type="datetime-local" {...register("dueAt")}></input>
         </label>
         {errors.dueAt && (
           <Alert status="error" role="alert" className="alert alert-error mb-5">

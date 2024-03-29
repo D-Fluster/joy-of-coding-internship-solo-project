@@ -43,7 +43,7 @@ export async function PUT(request: NextRequest, { params } : { params: {id: stri
     return NextResponse.json(editTodo, { status: 200 });
 }
 
-// HTTP DELETE function for deleting an existing to-do:
+// HTTP DELETE function for deleting an existing to-do (doesn't work on Postman):
 export async function DELETE({ params } : { params: {id: number | string}}) {
     if (!params.id)
         return { status: 400 }

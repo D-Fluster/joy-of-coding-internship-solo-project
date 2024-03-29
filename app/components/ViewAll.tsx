@@ -9,6 +9,8 @@ export const dynamic = "force-dynamic";
 
 import { stylizeCategories, stylizeStatuses } from "../definitions/functions";
 
+import PageTitle from "@/app/components/PageTitle";
+
 import Link from "next/link";
 import { Sacramento } from "next/font/google";
 import { Todo } from "@prisma/client";
@@ -30,17 +32,14 @@ export default function ViewAll({ allTodos }: Props) {
 
   const bodyClasses = " p-5 text-center ";
 
+  console.log(allTodos);
+  // datetime object
+  // one of the built-in sort methods is destructive --> toSorted copies and is not destructive
+
   return (
     <>
       <div>
-        <h1
-          className={
-            "pt-10 pb-7 text-purple-700 text-7xl text-center " +
-            sacramento.className
-          }
-        >
-          ✨All To-Dos💫
-        </h1>
+        <PageTitle>✨All To-Dos💫</PageTitle>
         <table className="border-purple-500">
           <thead>
             <tr>
@@ -56,13 +55,15 @@ export default function ViewAll({ allTodos }: Props) {
             {allTodos.length == 0 ? (
               <td>&emsp;</td>
             ) : (
-              allTodos.map((todo) => (
+              allTodos.reverse().map((todo) => (
                 <tr
                   key={todo.id}
                   className="border-4 border-t-0 border-double border-purple-500 p-5 m-5"
                 >
                   <td className={bodyClasses}>
-                    {stylizeStatuses(todo.status)}
+                    <Link href={`/status/${todo.status}`}>
+                      {stylizeStatuses(todo.status)}
+                    </Link>
                   </td>
                   <td className={bodyClasses}>
                     <Link href={`/category/${todo.category}`}>

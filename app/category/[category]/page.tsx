@@ -10,12 +10,9 @@ import ViewCat from "../../components/ViewCat";
 // Import Prisma and Todo model for database query:
 import prisma from "../../../prisma/db";
 import { Category } from "@prisma/client";
-import {
-  stylizeCategories,
-  stylizeStatuses,
-} from "@/app/definitions/functions";
+import { stylizeCategoryTitles } from "@/app/definitions/functions";
 
-export default async function SortedTodos({
+export default async function SortedTodosByCategory({
   params,
 }: {
   params: { category: Category };
@@ -27,29 +24,14 @@ export default async function SortedTodos({
     },
   });
 
-  // if (sortedTodos.length == 0) {
-  //   sortedTodos = [
-  //     {
-  //       id: 0,
-  //       title: "N/A",
-  //       description: "There are no to-dos in this category",
-  //       category: "NONE",
-  //       status: "DONE",
-  //       createdAt: { Date: "2000-01-01T00:00:00.000Z" },
-  //       updatedAt: "2000-01-01T00:00:00.000Z",
-  //       dueAt: { Date: "2000-01-01T00:00:00.000Z" },
-  //     },
-  //   ];
-  // }
-
-  const stylizedCategories = stylizeCategories(params.category);
+  const stylizedCategoryTitles = stylizeCategoryTitles(params.category);
 
   // Send the results of the query to the client component for on-screen rendering:
   return (
     <main>
       <ViewCat
         sortedTodos={sortedTodos}
-        stylizedCategories={stylizedCategories}
+        stylizedCategoryTitles={stylizedCategoryTitles}
       />
     </main>
   );

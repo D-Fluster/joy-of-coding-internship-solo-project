@@ -13,7 +13,7 @@ import { Todo } from "@prisma/client";
 
 export default async function TodosTodos() {
   // Query Prisma for all records in the databse, then reverse the order so the most recently added will appear at the top of the table:
-  const allTodos: Todo[] = (await prisma.todo.findMany()).reverse();
+  const allTodos: Todo[] = await prisma.todo.findMany(); //.reverse();
 
   // Send the results of the query to the client component for on-screen rendering:
   return (

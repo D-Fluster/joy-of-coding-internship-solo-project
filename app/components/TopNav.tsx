@@ -7,14 +7,21 @@ const specialElite = Special_Elite({
   weight: "400",
 });
 
+// Is there a way to use splicing to hold all of these in the same array?
+
 // Define an array of objects to hold link information for mapping
-const links = [
+const catLinks = [
   { emoji: "🏠", label: "Home", href: "/category/HOME" },
   { emoji: "💆", label: "Personal", href: "/category/PERSONAL" },
   { emoji: "📚", label: "School", href: "/category/SCHOOL" },
   { emoji: "👯", label: "Social", href: "/category/SOCIAL" },
   { emoji: "🏢", label: "Work", href: "/category/WORK" },
   { emoji: "🚫", label: "Uncategorized", href: "/category/NONE" },
+];
+
+const statLinks = [
+  { emoji: "🛠️", label: "In\u00a0Progress", href: "/status/TO_DO" },
+  { emoji: "✅", label: "Completed", href: "/status/DONE" },
 ];
 
 export default function TopNav() {
@@ -52,7 +59,19 @@ export default function TopNav() {
               <li>
                 <a>View by Category</a>
                 <ul className="p-2">
-                  {links.map((link) => (
+                  {catLinks.map((link) => (
+                    <li key={link.label}>
+                      <Link href={link.href}>
+                        {link.emoji}&emsp;{link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+              <li>
+                <a>View by Status</a>
+                <ul className="p-2">
+                  {statLinks.map((link) => (
                     <li key={link.label}>
                       <Link href={link.href}>
                         {link.emoji}&emsp;{link.label}
@@ -82,7 +101,21 @@ export default function TopNav() {
               <details>
                 <summary>By Category</summary>
                 <ul className="p-2 bg-fuchsia-200 text-slate-600">
-                  {links.map((link) => (
+                  {catLinks.map((link) => (
+                    <li key={link.label}>
+                      <Link href={link.href}>
+                        {link.emoji}&nbsp;&nbsp;&nbsp;{link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>By Status</summary>
+                <ul className="p-2 bg-fuchsia-200 text-slate-600">
+                  {statLinks.map((link) => (
                     <li key={link.label}>
                       <Link href={link.href}>
                         {link.emoji}&nbsp;&nbsp;&nbsp;{link.label}

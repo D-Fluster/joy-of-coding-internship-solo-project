@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import PageTitle from "@/app/components/PageTitle";
+
 ///// Import cusom Google Fonts for titles and buttons:
 import { Sacramento, Special_Elite } from "next/font/google";
 
@@ -18,14 +20,7 @@ const specialElite = Special_Elite({
 export default function Custom404() {
   return (
     <>
-      <h1
-        className={
-          "pt-10 pb-10 text-purple-700 text-7xl text-center " +
-          sacramento.className
-        }
-      >
-        ✨Error: 404💫
-      </h1>
+      <PageTitle>✨Error: 404💫</PageTitle>
       <div
         className="hero"
         style={{
