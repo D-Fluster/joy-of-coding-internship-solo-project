@@ -46,8 +46,8 @@ DKF Completed @ 2024-03-30
 - **Prisma Database Schemas:** /prisma/schema.prisma
 - **Zod Validation Schemas:** /app/validationSchemas.ts
 
-- DKF FUTURE IDEAS:
-- - Authentication
-- - Mobile optimization
-- - Add a confirmation modal to deletion
-- - Move table styling classes to the "constants" definitions
+_DKF FUTURE IDEAS:_
+- Authentication
+- Mobile optimization
+- Add a confirmation modal to deletion
+- Move table styling classes to the "constants" definitions
