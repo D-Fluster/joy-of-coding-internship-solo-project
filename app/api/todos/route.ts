@@ -2,7 +2,7 @@
 // CODE & COMMENTS DONE! //
 ///////////////////////////
 
-// Define aned export API routing configurations for HTTP GET (view) and POST (add) requests for all and newly created to-dos, respectively:
+// Define and export API routing configurations for HTTP GET (view) and POST (add) requests for all and newly created to-dos, respectively:
 // // APP > API > TODOS > [ID] > ROUTE (TS)
 
 // NOTE: These are fully functional per Postman, but currently only "POST" is actually utilized in this program

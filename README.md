@@ -22,9 +22,9 @@ DKF Completed @ 2024-03-30
 - **View All To-Dos:** /app/todos/page.tsx
 - **View To-Dos by Category:** /app/category/[category]/page.tsx
 - **View To-Dos by Status:** /app/status/[status]/page.tsx
-- **View Selected To-Do:** /app/[id]/page.tsx
-- **Edit Selected To-Do:** /app/[id]/edit/page.tsx
-- **Delete Selected To-Do:** /app/[id]/delete/confirm-delete/page.tsx
+- **View a Selected To-Do:** /app/[id]/page.tsx
+- **Edit a Selected To-Do:** /app/[id]/edit/page.tsx
+- **Delete a Selected To-Do:** /app/[id]/delete/confirm-delete/page.tsx
 
 ## Custom Components & Definitions
 

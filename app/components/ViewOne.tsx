@@ -8,7 +8,7 @@
 // Make this form a client component because it will take user input:
 "use client";
 
-// Force no cacing to prevent stale data from being displayed (but not always working):
+// Force no caching to prevent stale data from being displayed (but not always working):
 export const dynamic = "force-dynamic";
 
 // Import component for optimized links in NextJS:

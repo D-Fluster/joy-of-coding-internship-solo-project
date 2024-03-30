@@ -28,7 +28,7 @@ export default async function SortedByStatus({
   // If the URL slug is not among the enum of Category options, immediately redirect to the custom 404 page:
   if (!(params.status in Status)) return <Custom404 />;
 
-  // Query Prisma to find/"get" details of all records in the databse with the given status:
+  // Query Prisma to find/"get" details of all records in the database with the given status:
   let statTodos = await prisma.todo.findMany({
     where: {
       status: params.status,

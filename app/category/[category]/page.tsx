@@ -41,7 +41,7 @@ export default async function SortedByCategory({
   // If the URL slug is not among the enum of Category options, immediately redirect to the custom 404 page:
   if (!(params.category in Category)) return <Custom404 />;
 
-  // Query Prisma to find/"get" details of all records in the databse with the given category:
+  // Query Prisma to find/"get" details of all records in the database with the given category:
   let catTodos = await prisma.todo.findMany({
     where: {
       category: params.category,

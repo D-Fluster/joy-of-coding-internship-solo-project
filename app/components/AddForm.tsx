@@ -49,7 +49,7 @@ export default function AddForm() {
   const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
 
-  // Create a custom "onSubmit" function to handle form submissions, utiziling Axios to "POST" to the databse and rerouting users upon successful submission, or otherwise displaying a general error:
+  // Create a custom "onSubmit" function to handle form submissions, utilizing Axios to "POST" to the database and rerouting users upon successful submission, or otherwise displaying a general error:
   const onSubmit = handleSubmit(async (data) => {
     try {
       setSubmitting(true);

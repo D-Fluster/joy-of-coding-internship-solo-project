@@ -88,7 +88,7 @@ export default function EditForm({ thisTodo }: Props) {
   const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
 
-  // Create a custom "onSubmit" function to handle form submissions, utiziling Axios to "PUT" updates in the databse and rerouting users upon successful submission, or otherwise displaying a general error:
+  // Create a custom "onSubmit" function to handle form submissions, utilizing Axios to "PUT" updates in the database and rerouting users upon successful submission, or otherwise displaying a general error:
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
     try {
@@ -263,7 +263,7 @@ export default function EditForm({ thisTodo }: Props) {
           type="submit"
           onSubmit={onSubmit}
           disabled={isSubmitting}
-          className="btn btn-secondary  self-center pl-11 pr-11 uppercase"
+          className="btn btn-secondary self-center pl-11 pr-11 uppercase"
         >
           <span className={specialElite.className}>Edit To-Do</span>
         </button>

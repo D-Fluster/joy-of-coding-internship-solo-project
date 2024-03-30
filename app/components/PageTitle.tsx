@@ -5,7 +5,7 @@
 // Component for Rendering Page Titles:
 // // APP > COMPONENTS > PageTitle (TSX)
 
-// Import ReactNode for passing JSX / rich text to the child copmonents hereof:
+// Import ReactNode for passing JSX / rich text to the child components hereof:
 import { ReactNode } from "react";
 
 // Import Google Font for the titles:
