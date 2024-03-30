@@ -46,6 +46,8 @@ DKF Completed @ 2024-03-30
 - **Prisma Database Schemas:** /prisma/schema.prisma
 - **Zod Validation Schemas:** /app/validationSchemas.ts
 
+-----
+
 _DKF FUTURE IDEAS:_
 - Authentication
 - Mobile optimization
