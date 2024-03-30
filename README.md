@@ -6,7 +6,7 @@
 
 - AKA Personal Task Manager Application
 
-- AKA # joy-of-coding-internship-solo-project
+- AKA #joy-of-coding-internship-solo-project
 
 DKF Completed @ 2024-03-30
 
@@ -46,11 +46,8 @@ DKF Completed @ 2024-03-30
 - **Prisma Database Schemas:** /prisma/schema.prisma
 - **Zod Validation Schemas:** /app/validationSchemas.ts
 
-* DKF FUTURE IDEAS:
-
-- Add a confirmation modal to deletion
-- Move table styling classes to the "constants" definitions
-
-* DKF Notes:
-
-- Deploy a serverless application that uses Prisma to Vercel: https://www.prisma.io/docs/orm/prisma-client/deployment/serverless/deploy-to-vercel
+- DKF FUTURE IDEAS:
+- - Authentication
+- - Mobile optimization
+- - Add a confirmation modal to deletion
+- - Move table styling classes to the "constants" definitions
