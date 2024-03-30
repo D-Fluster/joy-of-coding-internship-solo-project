@@ -4,8 +4,12 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// Output added per Prisma Docs
+// See: Deploy a Serverless Application That Uses Prisma to Vercel: https://www.prisma.io/docs/orm/prisma-client/deployment/serverless/deploy-to-vercel
+
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated/client"
 }
 
 datasource db {
