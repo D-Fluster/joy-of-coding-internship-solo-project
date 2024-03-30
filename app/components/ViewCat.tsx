@@ -1,5 +1,9 @@
-// Client Component to View All To-Dos in a Category:
-// // APP > COMPONENTS > ViewCat
+///////////////////////////
+// CODE & COMMENTS DONE! //
+///////////////////////////
+
+// Client Component to View All To-Dos with a Given Category:
+// // APP > COMPONENTS > ViewCat (TSX)
 
 // Make this form a client component because it will take user input:
 "use client";
@@ -7,50 +11,55 @@
 // Force no caching to prevent stale data from being displayed (but not always working):
 export const dynamic = "force-dynamic";
 
+// Import component for optimized links in NextJS:
 import Link from "next/link";
 
-///////// Import to resolve TypeScript error in Prisma call (because "params.category" is of type "string", while the database's "Category" is of type "enum | undefined"):
+// Import custom components, constants, and functions used for stylization:
+import PageTitle from "@/app/components/PageTitle";
+import { stylizeStatuses } from "../definitions/functions";
+import {
+  bodyClasses,
+  headerClasses,
+  textLinkStyles,
+} from "../definitions/constants";
+
+// Import Prisma Todo model for TypeScript parameter clarification:
 import { Todo } from "@prisma/client";
 
-import PageTitle from "@/app/components/PageTitle";
-
-import { stylizeStatuses } from "../definitions/functions";
-
-// DKF DO THIS THROUGHOUT FOR DRYNESSS OMGGGG
-import { textLinkStyles } from "../definitions/constants";
-
+// Define the "shape" of the parameters/properties imported from the corresponding parent component:
 interface Props {
-  sortedTodos: Todo[];
+  catTodos: Todo[];
   stylizedCategoryTitles: string;
 }
 
-export default function ViewCat({
-  sortedTodos,
-  stylizedCategoryTitles,
-}: Props) {
-  const headerClasses =
-    " p-5 rounded-full text-purple-700 bg-fuchsia-500 font-black text-lg tracking-widest uppercase ";
-
-  const bodyClasses = " p-5 text-center ";
-
+// Export the default function from this component for use throughout the program:
+export default function ViewCat({ catTodos, stylizedCategoryTitles }: Props) {
   return (
     <>
       <PageTitle>{stylizedCategoryTitles} To-Dos💫</PageTitle>
+
+      {/* Table to display to-dos filtered by category: */}
       <table className="border-purple-500 w-full">
+        {/* Table headers: */}
         <thead>
           <tr>
             <th className={headerClasses + "max-w-sm w-1/6"}>Status</th>
             <th className={headerClasses + "max-w-lg w-1/4"}>Title</th>
             <th className={headerClasses + "max-w-xl w-1/4"}>Description</th>
-            <th className={headerClasses + "max-w-sm w-1/6"}>Due</th>
+            <th className={headerClasses + "max-w-sm w-1/6"}>
+              Due&nbsp;<span className="text-xl">&#x25B2;</span>
+            </th>
             <th className={headerClasses + "max-w-md w-1/6"}>Actions</th>
           </tr>
         </thead>
+
+        {/* Table contents: */}
         <tbody className="border-x-[5px] border-t-0 border-b-[5px] border-solid border-purple-500 p-5">
-          {sortedTodos.length == 0 ? (
-            <td>&emsp;</td>
+          {/* If there is nothing to display, render an empty table with minimal styling; otherwise render the requested contents: */}
+          {catTodos.length == 0 ? (
+            <td className="h-14">&emsp;</td>
           ) : (
-            sortedTodos.reverse().map((todo) => (
+            catTodos.map((todo) => (
               <tr
                 key={todo.id}
                 className="border-4 border-t-0 border-double border-purple-500 p-5 m-5"
@@ -60,7 +69,7 @@ export default function ViewCat({
                     {stylizeStatuses(todo.status)}
                   </Link>
                 </td>
-                <td className={"font-bold " + bodyClasses}>
+                <td className={bodyClasses}>
                   <Link href={`/${todo.id}`} className={textLinkStyles}>
                     {todo.title}
                   </Link>
@@ -84,16 +93,14 @@ export default function ViewCat({
         </tbody>
       </table>
 
-      {sortedTodos.length == 0 && (
+      {/* If there is nothing to display, render a prompt for the user to add a new to-do: */}
+      {catTodos.length == 0 && (
         <p className="mt-7 text-center w-full">
           There are no to-dos in this category yet.&ensp;
-          <Link
-            href="/add"
-            className="underline underline-offset-4 decoration-teal-500"
-          >
+          <Link href="/add" className={textLinkStyles}>
             Create one now
             <em>
-              <strong>!</strong>
+              <span className="font-black">!</span>
             </em>
           </Link>
         </p>

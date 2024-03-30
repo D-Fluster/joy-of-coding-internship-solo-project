@@ -1,37 +1,39 @@
-// Client Component to Add a New To-Do
-// APP > COMPONENTS > AddForm
+///////////////////////////
+// CODE & COMMENTS DONE! //
+///////////////////////////
+
+// Client Component to Add a New To-Do:
+// // APP > COMPONENTS > AddForm
 
 // Make this form a client component because it will take user input:
 "use client";
 
-import PageTitle from "@/app/components/PageTitle";
-
-// Import all tools necessary for routing and validation:
+// Import routing and validation tools:
 import axios from "axios";
-import { createTodoSchema } from "@/app/validationSchemas";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createTodoSchema } from "@/app/validationSchemas";
 
-// Import custom fonts and DaisyUI components:
+// Import custom and DaisyUI components to render page titles, error messages, and the form itself:
+import PageTitle from "@/app/components/PageTitle";
 import { Alert, Form } from "react-daisyui";
-import { Sacramento, Special_Elite } from "next/font/google";
 
-const sacramento = Sacramento({
-  subsets: ["latin"],
-  weight: "400",
-});
-
+// Import Google font for the submit button:
+import { Special_Elite } from "next/font/google";
 const specialElite = Special_Elite({
   subsets: ["latin"],
   weight: "400",
 });
 
+// Define the "shape" of this form interface using a custom Zod schema:
 type CreateTodoForm = z.infer<typeof createTodoSchema>;
 
+// Export the default function from this component for use throughout the program:
 export default function AddForm() {
+  // Utilize React-Hook-Form and Zod to handle form submissions (with the deconstructed "handleSubmit"), track changes (with "register"), and display validation errors (with "formState"):
   const {
     register,
     handleSubmit,
@@ -40,15 +42,16 @@ export default function AddForm() {
     resolver: zodResolver(createTodoSchema),
   });
 
+  // Initialize a constant utilizing "useRouter" to be used for rerouting the user upon successful form submission:
   const router = useRouter();
 
+  // Initialize constants utilizing "useState" to be used for rendering errors and preventing multiple form submissions, respectively:
   const [error, setError] = useState("");
-
   const [isSubmitting, setSubmitting] = useState(false);
 
+  // Create a custom "onSubmit" function to handle form submissions, utiziling Axios to "POST" to the databse and rerouting users upon successful submission, or otherwise displaying a general error:
   const onSubmit = handleSubmit(async (data) => {
     try {
-      console.log(data);
       setSubmitting(true);
       await axios.post("/api/todos", data);
       router.push("/todos");
@@ -61,6 +64,8 @@ export default function AddForm() {
   return (
     <>
       <PageTitle>✨Add New To-Do💫</PageTitle>
+
+      {/* If a general error is encountered upon attempted submission, render an alert message at the top of the form: */}
       {error && (
         <Alert status="error" role="alert" className="alert alert-error mb-5">
           <span className={specialElite.className}>
@@ -72,7 +77,10 @@ export default function AddForm() {
           </span>
         </Alert>
       )}
+
+      {/* Display the form to add a new to-do to the database: */}
       <Form className="form-control w-full" onSubmit={onSubmit}>
+        {/* Title input, labels, and conditional error rendering fields: */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Title:</strong>
@@ -100,6 +108,8 @@ export default function AddForm() {
             </span>
           </Alert>
         )}
+
+        {/* Description input, labels, and conditional error rendering: */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Description:</strong>
@@ -127,6 +137,8 @@ export default function AddForm() {
             </span>
           </Alert>
         )}
+
+        {/* Due date input, labels, and conditional error rendering fields: */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Due:</strong>
@@ -149,6 +161,8 @@ export default function AddForm() {
             </span>
           </Alert>
         )}
+
+        {/* Category input, labels, and conditional error rendering fields: */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Category:</strong>
@@ -162,12 +176,7 @@ export default function AddForm() {
             className="select select-bordered select-error mb-10"
             {...register("category")}
           >
-            <option
-              className="uppercase"
-              disabled
-              // selected
-              // // Warning: Use the `defaultValue` or `value` props on <select> instead of setting `selected` on <option>.
-            >
+            <option className="uppercase" disabled>
               Choose a Category
             </option>
             <option value="NONE">🚫&ensp;None</option>
@@ -178,10 +187,12 @@ export default function AddForm() {
             <option value="WORK">🏢&ensp;Work</option>
           </select>
         </label>
+
+        {/* Form submission button: */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="btn btn-secondary  self-center pl-11 pr-11 uppercase"
+          className="btn btn-secondary self-center pl-11 pr-11 uppercase"
         >
           <span className={specialElite.className}>Add To-Do</span>
         </button>
@@ -189,45 +200,3 @@ export default function AddForm() {
     </>
   );
 }
-
-/* 
-{errors.description?.message} prints "Required."
-
-        <div className="max-w-1">
-          <h2>Category</h2>
-          <label className="label cursor-pointer">
-            <input type="checkbox" className="checkbox mr-5" />
-            <span className="label-text">Home</span>
-          </label>
-          <label className="label cursor-pointer">
-            <input type="checkbox" className="checkbox mr-5" />
-            <span className="label-text">Personal</span>
-          </label>
-          <label className="label cursor-pointer">
-            <input type="checkbox" className="checkbox mr-5" />
-            <span className="label-text">Social</span>
-          </label>
-          <label className="label cursor-pointer">
-            <input type="checkbox" className="checkbox mr-5" />
-            <span className="label-text">Work</span>
-          </label>
-        </div>
-
-// DAISY ELEMENT: With form-control and labels
-// https://daisyui.com/components/input/#with-form-control-and-labels
-      <label className="form-control w-full max-w-xs">
-        <div className="label">
-          <span className="label-text">What is your name?</span>
-          <span className="label-text-alt">Top Right label</span>
-        </div>
-        <input
-          type="text"
-          placeholder="Type here"
-          className="input input-bordered w-full max-w-xs"
-        />
-        <div className="label">
-          <span className="label-text-alt">Bottom Left label</span>
-          <span className="label-text-alt">Bottom Right label</span>
-        </div>
-      </label>
-*/

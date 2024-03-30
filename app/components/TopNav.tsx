@@ -1,15 +1,21 @@
-import Link from "next/link";
-import { Special_Elite } from "next/font/google";
-// import { usePathname } from "next/navigation";
+///////////////////////////
+// CODE & COMMENTS DONE! //
+///////////////////////////
 
+// Component for Rendering the Top Navigation Bar:
+// // APP > COMPONENTS > TopNav (TSX)
+
+// Import component for optimized links in NextJS:
+import Link from "next/link";
+
+// Import Google font for the buttons:
+import { Special_Elite } from "next/font/google";
 const specialElite = Special_Elite({
   subsets: ["latin"],
   weight: "400",
 });
 
-// Is there a way to use splicing to hold all of these in the same array?
-
-// Define an array of objects to hold link information for mapping
+// Define an array of objects to hold link information for mapping by to-do category:
 const catLinks = [
   { emoji: "🏠", label: "Home", href: "/category/HOME" },
   { emoji: "💆", label: "Personal", href: "/category/PERSONAL" },
@@ -19,20 +25,24 @@ const catLinks = [
   { emoji: "🚫", label: "Uncategorized", href: "/category/NONE" },
 ];
 
+// Define an array of objects to hold link information for mapping by to-do status:
 const statLinks = [
   { emoji: "🛠️", label: "In\u00a0Progress", href: "/status/TO_DO" },
   { emoji: "✅", label: "Completed", href: "/status/DONE" },
 ];
 
-export default function TopNav() {
-  // const currentPath = usePathname();
+// // DKF RESEARCH: Is there a way to use splicing (or another method) to hold all links in the same array but only map certain subsets at a time?
 
+// Export the default function from this component for use throughout the program:
+export default function TopNav() {
+  // Render responsive navbar based on DaisyUI prefab
+  // See: https://daisyui.com/components/navbar/#responsive-dropdown-menu-on-small-screen-center-menu-on-large-screen
   return (
     <>
       <div className="navbar bg-secondary min-h-20 text-base-100">
         <div className="navbar-start">
           <div className="dropdown">
-            {/* Hamburger nav for smaller screens */}
+            {/* Hamburger nav for smaller screens: */}
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +101,8 @@ export default function TopNav() {
             <span className="font-black italic text-fuchsia-500">&nbsp;!</span>
           </Link>
         </div>
-        {/* Full-width nav for larger screens */}
+
+        {/* Full-width nav for larger screens: */}
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
@@ -130,6 +141,8 @@ export default function TopNav() {
             </li>
           </ul>
         </div>
+
+        {/* "Easy button" for adding a new to-do: */}
         <div className="navbar-end">
           <Link href="/add" className="btn bg-fuchsia-500 border-fuchsia-900">
             ➕
@@ -139,79 +152,3 @@ export default function TopNav() {
     </>
   );
 }
-
-/* ORIGNIAL JSX FROM DAISYUI:
-<>
-  <div className="navbar bg-base-100">
-    <div className="navbar-start">
-      <div className="dropdown">
-        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h8m-8 6h16"
-            />
-          </svg>
-        </div>
-        <ul
-          tabIndex={0}
-          className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-        >
-          <li>
-            <Link>Item 1</a>
-          </li>
-          <li>
-            <a>Parent</a>
-            <ul className="p-2">
-              <li>
-                <a>Submenu 1</a>
-              </li>
-              <li>
-                <a>Submenu 2</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a>Item 3</a>
-          </li>
-        </ul>
-      </div>
-      <a className="btn btn-ghost text-xl">daisyUI</a>
-    </div>
-    <div className="navbar-center hidden lg:flex">
-      <ul className="menu menu-horizontal px-1">
-        <li>
-          <a>Item 1</a>
-        </li>
-        <li>
-          <details>
-            <summary>Parent</summary>
-            <ul className="p-2">
-              <li>
-                <a>Submenu 1</a>
-              </li>
-              <li>
-                <a>Submenu 2</a>
-              </li>
-            </ul>
-          </details>
-        </li>
-        <li>
-          <a>Item 3</a>
-        </li>
-      </ul>
-    </div>
-    <div className="navbar-end">
-      <a className="btn">Button</a>
-    </div>
-  </div>
-</>
-*/

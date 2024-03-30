@@ -1,66 +1,60 @@
+///////////////////////////
+// CODE & COMMENTS DONE! //
+///////////////////////////
+
 // Client Component to Edit an Existing To-Do:
 // // APP > COMPONENTS > EditForm
 
 // Make this form a client component because it will take user input:
 "use client";
 
+// Force no caching to prevent stale data from being displayed (but not always working):
 export const dynamic = "force-dynamic";
 
-import PageTitle from "@/app/components/PageTitle";
-
-// Import all tools necessary for routing and validation:
+// Import routing and validation tools:
 import axios from "axios";
-import { editTodoSchema } from "@/app/validationSchemas";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { editTodoSchema } from "@/app/validationSchemas";
 
-// import { addLeadingZero } from "../definitions/functions";
-
-// Import custom fonts and DaisyUI components:
-import { Alert, Form } from "react-daisyui";
-import { Sacramento, Special_Elite } from "next/font/google";
+// Import Prisma Todo model for TypeScript parameter clarification:
 import { Todo } from "@prisma/client";
 
-const sacramento = Sacramento({
-  subsets: ["latin"],
-  weight: "400",
-});
+// Import custom and DaisyUI components to render page titles, error messages, and the form itself:
+import PageTitle from "@/app/components/PageTitle";
+import { Alert, Form } from "react-daisyui";
 
+// Import Google font for the submit button:
+import { Special_Elite } from "next/font/google";
 const specialElite = Special_Elite({
   subsets: ["latin"],
   weight: "400",
 });
 
+// Define the "shape" of this form interface using a custom Zod schema:
 type EditTodoForm = z.infer<typeof editTodoSchema>;
 
+// Define the "shape" of the parameters/properties imported from the corresponding parent component:
 interface Props {
   thisTodo: Todo;
 }
 
+// Export the default function from this component for use throughout the program:
 export default function EditForm({ thisTodo }: Props) {
-  const {
-    id,
-    title,
-    description,
-    category,
-    status,
-    // createdAt,
-    // updatedAt,
-    dueAt,
-  } = thisTodo;
+  // Destructure the imported to-do object for easier display and transformation handling:
+  const { id, title, description, category, status, dueAt } = thisTodo;
 
-  // Destructure dueAt object for restructuring into "[YYYY]-[MM]-[DD]T[HH]:[mm]" format in local time
-  // Otherwise, just using "dueAt.toISOString().split("Z")[0];", the "Due" field will auto-populate with the date-time in UTC
+  // Destructure the dueAt object for restructuring into "[YYYY]-[MM]-[DD]T[HH]:[mm]" format in local time; otherwise (i.e., just using "dueAt.toISOString().split("Z")[0];") the "Due" field will auto-populate with the date-time in UTC:
   const dueAtYear = dueAt.getFullYear();
   const dueAtMonth = dueAt.getMonth() + 1;
   const dueAtDay = dueAt.getDate();
   const dueAtHours = dueAt.getHours();
   const dueAtMinutes = dueAt.getMinutes();
 
-  // For months, days, hours, and minutes between 0 and 9, utilize a custom function to add a leading zero for formatting purposes:
+  // Create a custom function to add a leading zero for formatting purposes to "date pieces" (i.e., months, days, hours, or minutes) between 0 and 9:
   const addLeadingZero = (datePiece: number) => {
     if (datePiece.toString().length == 1) {
       const datePieceString = `0${datePiece}`;
@@ -71,18 +65,14 @@ export default function EditForm({ thisTodo }: Props) {
     }
   };
 
-  // Reformat the dueAt object in local time:
+  // Reformat the dueAt object for auto-population in the user's local time:
   const dueAtTransformed = `${dueAtYear}-${addLeadingZero(
     dueAtMonth
   )}-${addLeadingZero(dueAtDay)}T${addLeadingZero(dueAtHours)}:${addLeadingZero(
     dueAtMinutes
   )}`;
 
-  console.log(dueAtTransformed);
-
-  // Create a "transform" to process this separately
-  // Can create another prop based on dueAt -- e.g., dueAtTransformed -- and leave dueAt alone, but pass in DAT to value
-
+  // Utilize React-Hook-Form and Zod to handle form submissions (with the deconstructed "handleSubmit"), track changes (with "register"), and display validation errors (with "formState"):
   const {
     register,
     handleSubmit,
@@ -91,21 +81,21 @@ export default function EditForm({ thisTodo }: Props) {
     resolver: zodResolver(editTodoSchema),
   });
 
+  // Initialize a constant utilizing "useRouter" to be used for rerouting the user upon successful form submission:
   const router = useRouter();
 
+  // Initialize constants utilizing "useState" to be used for rendering errors and preventing multiple form submissions, respectively:
   const [error, setError] = useState("");
-
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const onSubmit = handleSubmit(async (newData) => {
-    console.log(newData);
+  // Create a custom "onSubmit" function to handle form submissions, utiziling Axios to "PUT" updates in the databse and rerouting users upon successful submission, or otherwise displaying a general error:
+  const onSubmit = handleSubmit(async (data) => {
+    console.log(data);
     try {
-      console.log(newData);
       setSubmitting(true);
-      await axios.put(`/api/todos/${thisTodo.id}`, newData);
+      await axios.put(`/api/todos/${thisTodo.id}`, data);
       router.push(`/${id}`);
     } catch (error) {
-      console.error(error);
       setSubmitting(false);
       setError("OOPS! An unexpected error occurred. Please try again.");
     }
@@ -114,6 +104,8 @@ export default function EditForm({ thisTodo }: Props) {
   return (
     <>
       <PageTitle>✨Edit To-Do #{id}💫</PageTitle>
+
+      {/* If a general error is encountered upon attempted submission, render an alert message at the top of the form: */}
       {error && (
         <Alert status="error" role="alert" className="alert alert-error mb-5">
           <span className={specialElite.className}>
@@ -125,7 +117,10 @@ export default function EditForm({ thisTodo }: Props) {
           </span>
         </Alert>
       )}
+
+      {/* Display the form to add a new to-do to the database: */}
       <Form className="form-control w-full" onSubmit={onSubmit}>
+        {/* Title input, labels, and conditional error rendering fields: */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Title:</strong>
@@ -154,6 +149,8 @@ export default function EditForm({ thisTodo }: Props) {
             </span>
           </Alert>
         )}
+
+        {/* Description input, labels, and conditional error rendering fields: */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Description:</strong>
@@ -182,6 +179,8 @@ export default function EditForm({ thisTodo }: Props) {
             </span>
           </Alert>
         )}
+
+        {/* Due date input, labels, and conditional error rendering fields: */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Due:</strong>
@@ -208,6 +207,8 @@ export default function EditForm({ thisTodo }: Props) {
             </span>
           </Alert>
         )}
+
+        {/* Category input, labels, and conditional error rendering fields: */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Category:</strong>
@@ -233,6 +234,8 @@ export default function EditForm({ thisTodo }: Props) {
             <option value="WORK">🏢&ensp;Work</option>
           </select>
         </label>
+
+        {/* Status input and label fields: */}
         <div className="label">
           <span className="label-text ml-3 uppercase">
             <strong>Status:</strong>
@@ -254,6 +257,8 @@ export default function EditForm({ thisTodo }: Props) {
             <option value="DONE">✅&ensp;Done!</option>
           </select>
         </label>
+
+        {/* Form submission button: */}
         <button
           type="submit"
           onSubmit={onSubmit}
@@ -266,41 +271,3 @@ export default function EditForm({ thisTodo }: Props) {
     </>
   );
 }
-
-/*
-interface Props {
-  thisTodo: Todo[];
-}
-
-export default function EditForm({ thisTodo }: Props) {
-  console.log(thisTodo);
-  //   const {
-  //     id,
-  //     title,
-  //     description,
-  //     category,
-  //     status,
-  //     createdAt,
-  //     updatedAt,
-  //     dueAt,
-  //   } = thisTodo;
-
-          <div className="hidden label">
-          <span className="label-text ml-3 uppercase">
-            <strong>ID (Auto-Generated):</strong>
-          </span>
-          <span className="label-text-alt mr-3 uppercase">
-            Required&nbsp;<span className=" text-red-500">*</span>
-          </span>
-        </div>
-        <label className="hidden input input-bordered items-center gap-2 select-error mb-5">
-          <input
-            disabled
-            type="text"
-            className="grow"
-            defaultValue={id}
-            // placeholder={id}
-            {...register("id")}
-          />
-        </label>
-*/

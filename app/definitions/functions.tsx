@@ -1,15 +1,15 @@
-// // Update styling of categories for display in the table
+///////////////////////////
+// CODE & COMMENTS DONE! //
+///////////////////////////
 
-// interface Props {
-//     category: string;
-// }
+// Define and export functions for use throughout the program, primarily for stylization of rendered content:
+// // APP > DEFINITIONS > FUNCTIONS (TSX)
 
-// If nesting inside Props, refer to as Props.category
+// NOTE: While it's technically unnecessary to explicitly program the "NONE" and "TO_DO" cases, as they're covered by the default return, I prefer to do so for maximal clarity
 
-// export const deleteTodo ()
+// ALSO NOTE: For extra DRYness, I realize I could also try to figure out a way to move more functions herein (e.g., to sort query results by due date, to reformat dates, etc.)
 
-// Note: I realize it's technically unnecessary to program the "NONE" and "TO_DO" cases, but I prefer it for my own clarity
-
+// Stylization of category enum for display in page titles:
 export const stylizeCategoryTitles = (category: string) => {
   switch (category) {
     case "HOME":
@@ -36,6 +36,7 @@ export const stylizeCategoryTitles = (category: string) => {
   return category;
 };
 
+// Stylization of category enum for display in tables:
 export const stylizeCategories = (category: string) => {
   switch (category) {
     case "HOME":
@@ -62,6 +63,7 @@ export const stylizeCategories = (category: string) => {
   return category;
 };
 
+// Stylization of status enum for display in page titles:
 export const stylizeStatusTitles = (status: string) => {
   switch (status) {
     case "TO_DO":
@@ -76,6 +78,7 @@ export const stylizeStatusTitles = (status: string) => {
   return status;
 };
 
+// Stylization of status enum for display in tables:
 export const stylizeStatuses = (status: string) => {
   switch (status) {
     case "TO_DO":
