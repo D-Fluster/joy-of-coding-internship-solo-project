@@ -24,8 +24,8 @@ import TopNav from "./components/TopNav";
 
 // Define global metadata:
 export const metadata: Metadata = {
-  title: "Todos Tus To-Dos",
-  description: "Personal Task Manager by LAdanimo",
+  title: "¡Todos Tus To-Dos!",
+  description: "¡Tackle Todos Tus To-Dos! A Next.js App by LAdanimo",
   icons: {
     icon: "/favicon.ico",
   },
@@ -45,6 +45,7 @@ export default function RootLayout({
       {/* Redefine the favicon, as only doing so one way or the other didn't always render properly: */}
       <Head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <meta property="og:image" content="/tackle-todos.png" />
       </Head>
 
       {/* Set the site-wide default font: */}
