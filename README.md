@@ -37,7 +37,7 @@ DKF Completed @ 2024-03-30
 - **Prisma Client Instance**: [/prisma/db.ts](https://github.com/LAdanimo/joy-of-coding-internship-solo-project/blob/main/prisma/db.ts)
 - **Prisma Database Schemas:** [/prisma/schema.prisma](https://github.com/LAdanimo/joy-of-coding-internship-solo-project/blob/main/prisma/schema.prisma)
 - **Zod Validation Schemas:** [/app/validationSchemas.ts
-](https://github.com/LAdanimo/joy-of-coding-internship-solo-project/blob/main/app/validationSchemas.ts)
+  ](https://github.com/LAdanimo/joy-of-coding-internship-solo-project/blob/main/app/validationSchemas.ts)
 
 ### Front-End
 
@@ -56,38 +56,42 @@ DKF Completed @ 2024-03-30
 - **Client Component for Viewing a Selected To-Do:** [/app/components/ViewCat.tsx](https://github.com/LAdanimo/joy-of-coding-internship-solo-project/blob/main/app/components/ViewCat.tsx)
 - **Client Component for Deleting To-Dos:** [/app/components/DeleteOne.tsx](https://github.com/LAdanimo/joy-of-coding-internship-solo-project/blob/main/app/components/DeleteOne.tsx)
 
------
+---
 
 ## Prompt:
 
 Right now you have React/Next.js knowledge, some supporting tools like Prisma and Radix UI, all while building upon your knowledge of the web. This is the final web project before you move onto the internship. A solo project will help you apply your knowledge of React or Next.js, along with the tools you've learned (Tailwind CSS, Radix UI, and Prisma). You have 2 choices:
 
-* Build your own custom full-stack React or Next.js task manager, OR
-* Complete the RedwoodJS tutorial
-* _[I chose to do both with this repo being the former]_
+- Build your own custom full-stack React or Next.js task manager, OR
+- Complete the RedwoodJS tutorial
+- _[I chose to do **both** with this repo being **the former**]_
 
 Create a Personal Task Manager Application. This project will help you manage your tasks, and it can serve as an excellent learning experience. Create a web application that allows users to add, edit, and delete personal tasks.
 
 **Key Features:**
 
-* _Task List:_ Display a list of tasks, including the task name, description, and due date.
-* _Task Creation_: Implement a feature to add new tasks, with fields for task name, description, and due date.
-* _Task Editing:_ Allow users to edit task details such as the name, description, and due date.
-* _Task Deletion:_ Enable users to delete tasks they no longer need.
-* _Task Organization:_ Implement task organization or filtering options, such as sorting by due date or categorizing tasks.
-* _Bonus: User Authentication:_ Add user registration and authentication to allow multiple users to manage their personal tasks. _[I haven't implemented this (yet!)]_
+- _Task List:_ Display a list of tasks, including the task name, description, and due date.
+- _Task Creation_: Implement a feature to add new tasks, with fields for task name, description, and due date.
+- _Task Editing:_ Allow users to edit task details such as the name, description, and due date.
+- _Task Deletion:_ Enable users to delete tasks they no longer need.
+- _Task Organization:_ Implement task organization or filtering options, such as sorting by due date or categorizing tasks.
+- _Bonus: User Authentication:_ Add user registration and authentication to allow multiple users to manage their personal tasks. _[I haven't implemented this (yet!)]_
 
 **Tech Stack:**
 
-* **_Framework:_** React or Next.js _[I chose **Next.js**]_
-* **_Interface:_**  Tailwind CSS for styling; Radix UI for accessibility _[I used **Tailwid CSS** and **DaisyUI**]_
-* **_Database:_** mySql or Postgres with Prisma _[I chose **Postres** and **Prisma**]_
+- **_Framework:_** React or Next.js
+  - _[I chose **Next.js**]_
+- **_Interface:_** Tailwind CSS for styling; Radix UI for accessibility
+  - _[I used **Tailwind CSS** and **daisyUI**]_
+- **_Database:_** mySql or Postgres with Prisma
+  - _[I chose **PostgreSQL** and **Prisma (ORM)**]_
 
 This project will give you an opportunity to apply your knowledge and encourage you to explore new concepts such as user authentication, state management, and more. It's a practical way to create something useful while continuing to expand your web development skills. Happy coding, and have fun building your Personal Task Manager!
 
------
+---
 
 _DKF FUTURE IDEAS:_
+
 - Authentication
 - Mobile optimization
 - Increase accessibility
